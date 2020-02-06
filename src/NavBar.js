@@ -1,5 +1,6 @@
 import React from "react";
-import { Pane, Text, majorScale } from "evergreen-ui";
+import { Pane, majorScale } from "evergreen-ui";
+import { Text } from "./Text";
 
 export function NavBar() {
   return (

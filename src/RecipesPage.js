@@ -8,6 +8,7 @@ const QUERY = gql`
   query RecipesPageQuery {
     recipes {
       id
+      description
       name
       ingredients {
         id
@@ -16,6 +17,8 @@ const QUERY = gql`
         quantity
         order
       }
+      prepTime
+      yields
     }
   }
 `;
