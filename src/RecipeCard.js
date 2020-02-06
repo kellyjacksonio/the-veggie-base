@@ -25,7 +25,7 @@ export function RecipeCard({ recipe }) {
         <Text fontSize={20}>{recipe.name}</Text>
       </Pane>
       {recipe.ingredients.length > 0 && (
-        <IngredientList ingredients={ingredients} />
+        <IngredientList ingredients={recipe.ingredients} />
       )}
     </Pane>
   );
