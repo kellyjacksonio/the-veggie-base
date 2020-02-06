@@ -1,7 +1,7 @@
 import React from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { Test } from "./Test";
+import { AppLayout } from "./AppLayout";
 
 function App() {
   const HTTP_URI = "http://localhost:4000";
@@ -11,7 +11,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Test />
+      <AppLayout />
     </ApolloProvider>
   );
 }

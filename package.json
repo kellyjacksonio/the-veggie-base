@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "apollo-boost": "^0.4.7",
+    "evergreen-ui": "^4.23.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.1",
     "phoenix": "1.4.0",

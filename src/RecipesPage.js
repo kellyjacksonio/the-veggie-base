@@ -1,9 +1,11 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
+import { Pane, majorScale } from "evergreen-ui";
+import { RecipeCard } from "./RecipeCard";
 
 const QUERY = gql`
-  query TestQuery {
+  query RecipesPageQuery {
     recipes {
       id
       name
@@ -18,17 +20,16 @@ const QUERY = gql`
   }
 `;
 
-export function Test() {
+export function RecipesPage() {
   const { data, loading } = useQuery(QUERY);
 
   if (loading) return null;
+
   return (
-    <>
-      <h1>The Veggie Base</h1>
-      <h4>Here are the recipes:</h4>
+    <Pane padding={majorScale(1)}>
       {data.recipes.map(recipe => (
-        <p>{recipe.name}</p>
+        <RecipeCard recipe={recipe} />
       ))}
-    </>
+    </Pane>
   );
 }
