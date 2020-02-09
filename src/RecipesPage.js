@@ -17,6 +17,7 @@ const QUERY = gql`
         quantity
         order
       }
+      instructions
       prepTime
       yields
     }

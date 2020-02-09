@@ -1,4 +1,5 @@
 import React from "react";
+import { get } from "lodash";
 import { Icon, Pane, majorScale } from "evergreen-ui";
 import { Text } from "./Text";
 
@@ -28,6 +29,13 @@ export function RecipeCard({ recipe }) {
       </Pane>
       {recipe.ingredients.length > 0 && (
         <IngredientList ingredients={recipe.ingredients} />
+      )}
+      {recipe.instructions && (
+        <Pane display="flex" flexDirection="column">
+          {get(recipe, "instructions", []).map((instruction, index) => (
+            <Text>{`${index + 1}. ${instruction}`}</Text>
+          ))}
+        </Pane>
       )}
     </Pane>
   );
