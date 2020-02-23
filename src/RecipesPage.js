@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Pane, majorScale } from "evergreen-ui";
 import { RecipeCard } from "./RecipeCard";
+import { RecipeForm } from "./RecipeForm";
 
 const QUERY = gql`
   query RecipesPageQuery {
@@ -31,6 +32,7 @@ export function RecipesPage() {
 
   return (
     <Pane padding={majorScale(1)}>
+      <RecipeForm />
       {data.recipes.map(recipe => (
         <RecipeCard recipe={recipe} />
       ))}
