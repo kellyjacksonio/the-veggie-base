@@ -20,7 +20,6 @@ function IngredientList({ ingredients }) {
 }
 
 export function RecipeCard({ recipe }) {
-  console.log("recipe", recipe);
   return (
     <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
       <Pane marginBottom={majorScale(2)} display="flex" flexDirection="column">
