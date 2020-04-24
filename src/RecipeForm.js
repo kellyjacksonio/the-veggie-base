@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Button, IconButton, Pane } from "evergreen-ui";
+import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { Input, Form, Scope } from "@rocketseat/unform";
 import { Text } from "./Text";
 
@@ -29,6 +29,15 @@ const MUTATION = gql`
   }
 `;
 
+function FormInput({ name, label }) {
+  return (
+    <Pane display="flex" flexDirection="column">
+      <Text>{label}</Text>
+      <Input name={name} />
+    </Pane>
+  );
+}
+
 const emptyIngredient = {
   quantity: undefined,
   measurement: undefined,
@@ -44,7 +53,6 @@ export function RecipeForm() {
   const [createRecipe, createRecipeResults] = useMutation(MUTATION);
 
   function handleSubmit(data) {
-    console.log("data", data);
     createRecipe({ variables: data });
   }
 
@@ -60,23 +68,33 @@ export function RecipeForm() {
 
   return (
     // use initialData prop for initial values
-    <Pane display="flex" flexDirection="column">
-      <Text>Add your recipe</Text>
+    <Pane display="flex" flexDirection="column" width="35%">
       <Form onSubmit={handleSubmit}>
-        <Pane display="flex" flexDirection="column" width="30%">
-          <Input name="name" label="Name"></Input>
-          <Input name="description" label="Description"></Input>
-          <Input name="prepTime" label="Prep Time"></Input>
-          <Input name="yields" label="Yields"></Input>
-          <Input name="cookingMethod" label="Cooking Method"></Input>
-          <Button
-            onClick={() =>
-              addItem(ingredients, emptyIngredient, setIngredients)
-            }
-            type="button"
-          >
-            Add Ingredient
-          </Button>
+        <Pane display="flex" flexDirection="column">
+          <Pane marginTop={majorScale(2)}>
+            <FormInput name="name" label="Name" />
+          </Pane>
+          <Pane display="flex" marginTop={majorScale(2)}>
+            <FormInput name="prepTime" label="Prep Time" />
+            <FormInput name="yields" label="Yields" />
+            <FormInput name="cookingMethod" label="Cooking Method" />
+          </Pane>
+          <FormInput
+            name="description"
+            label="Description"
+            marginTop={majorScale(2)}
+          />
+          <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
+            <Text marginRight={majorScale(2)}>Ingredients</Text>
+            <Button
+              onClick={() =>
+                addItem(ingredients, emptyIngredient, setIngredients)
+              }
+              type="button"
+            >
+              Add Ingredient
+            </Button>
+          </Pane>
           <Scope path="ingredients">
             {ingredients.map((_ingredient, index) => {
               return (
@@ -89,15 +107,15 @@ export function RecipeForm() {
                       removeItem(ingredients, index, setIngredients)
                     }
                   />
-                  <Input
+                  <FormInput
                     name={`ingredients[${index}].quantity`}
                     label="Quantity"
                   />
-                  <Input
+                  <FormInput
                     name={`ingredients[${index}].measurement`}
                     label="Measurement"
                   />
-                  <Input
+                  <FormInput
                     name={`ingredients[${index}].ingredient`}
                     label="Ingredient"
                   />
@@ -105,14 +123,17 @@ export function RecipeForm() {
               );
             })}
           </Scope>
-          <Button
-            onClick={() =>
-              addItem(instructions, emptyInstruction, setInstructions)
-            }
-            type="button"
-          >
-            Add Instruction
-          </Button>
+          <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
+            <Text marginRight={majorScale(2)}>Instruction</Text>
+            <Button
+              onClick={() =>
+                addItem(instructions, emptyInstruction, setInstructions)
+              }
+              type="button"
+            >
+              Add Instruction
+            </Button>
+          </Pane>
           <Scope path="instructions">
             {instructions.map((_instruction, index) => {
               return (
@@ -124,12 +145,14 @@ export function RecipeForm() {
                     }
                     disabled={instructions.length === 1}
                   />
-                  <Input name={`instruction[${index}]`} label="Instruction" />
+                  <FormInput name={`instruction[${index}]`} />
                 </Pane>
               );
             })}
           </Scope>
-          <Button type="submit">Create Recipe</Button>
+          <Button type="submit" marginTop={majorScale(2)}>
+            Create Recipe
+          </Button>
         </Pane>
       </Form>
     </Pane>

@@ -31,11 +31,13 @@ export function RecipesPage() {
   if (loading) return null;
 
   return (
-    <Pane padding={majorScale(1)}>
-      <RecipeForm />
+    <React.Fragment>
+      <Pane display="flex" justifyContent="center">
+        <RecipeForm />
+      </Pane>
       {data.recipes.map(recipe => (
         <RecipeCard recipe={recipe} />
       ))}
-    </Pane>
+    </React.Fragment>
   );
 }
