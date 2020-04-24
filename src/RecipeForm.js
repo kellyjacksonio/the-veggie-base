@@ -9,7 +9,7 @@ const MUTATION = gql`
   mutation CreateRecipe(
     $cookingMethod: [String]
     $description: String!
-    $ingredients: [Ingredient]
+    $ingredients: [RecipeIngredient]
     $instructions: [String]
     $name: String!
     $prepTime: Int
@@ -50,10 +50,21 @@ export function RecipeForm() {
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
-  const [createRecipe, createRecipeResults] = useMutation(MUTATION);
+  const [createRecipe] = useMutation(MUTATION);
 
-  function handleSubmit(data) {
-    createRecipe({ variables: data });
+  function handleSubmit(data, { resetForm }) {
+    // fix this monstrosity
+    // find number library?
+    // fix form scoping
+    const variables = {
+      ...data,
+      ingredients: data.ingredients.ingredients,
+      instructions: data.instructions.instructions,
+      prepTime: parseInt(data.prepTime),
+      yields: parseInt(data.yields)
+    };
+
+    createRecipe({ variables }).then(() => resetForm());
   }
 
   function removeItem(items, index, setItems) {
@@ -145,7 +156,7 @@ export function RecipeForm() {
                     }
                     disabled={instructions.length === 1}
                   />
-                  <FormInput name={`instruction[${index}]`} />
+                  <FormInput name={`instructions[${index}]`} />
                 </Pane>
               );
             })}

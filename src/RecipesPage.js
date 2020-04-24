@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import { Pane, majorScale } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { RecipeCard } from "./RecipeCard";
 import { RecipeForm } from "./RecipeForm";
 
