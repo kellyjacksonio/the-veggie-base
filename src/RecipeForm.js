@@ -41,16 +41,18 @@ function FormInput({ name, label }) {
 const emptyIngredient = {
   quantity: undefined,
   measurement: undefined,
-  ingredient: undefined
+  ingredient: undefined,
 };
 
 const emptyInstruction = "";
 
-export function RecipeForm() {
+export function RecipeForm({ refetchQuery }) {
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
-  const [createRecipe] = useMutation(MUTATION);
+  const [createRecipe] = useMutation(MUTATION, {
+    refetchQueries: [{ query: refetchQuery }],
+  });
 
   function handleSubmit(data, { resetForm }) {
     // fix this monstrosity
@@ -61,7 +63,7 @@ export function RecipeForm() {
       ingredients: data.ingredients.ingredients,
       instructions: data.instructions.instructions,
       prepTime: parseInt(data.prepTime),
-      yields: parseInt(data.yields)
+      yields: parseInt(data.yields),
     };
 
     createRecipe({ variables }).then(() => resetForm());

@@ -33,10 +33,10 @@ export function RecipesPage() {
   return (
     <React.Fragment>
       <Pane display="flex" justifyContent="center">
-        <RecipeForm />
+        <RecipeForm refetchQuery={QUERY} />
       </Pane>
-      {data.recipes.map(recipe => (
-        <RecipeCard recipe={recipe} />
+      {data.recipes.map((recipe) => (
+        <RecipeCard recipe={recipe} refetchQuery={QUERY} />
       ))}
     </React.Fragment>
   );
