@@ -1,9 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { Pane } from "evergreen-ui";
+import { Button } from "evergreen-ui";
 import { RecipeCard } from "./RecipeCard";
-import { RecipeForm } from "./RecipeForm";
 
 const QUERY = gql`
   query RecipesPageQuery {
@@ -22,30 +22,6 @@ const QUERY = gql`
       instructions
       prepTime
       yields
-    }
-  }
-`;
-
-const CREATE_MUTATION = gql`
-  mutation CreateRecipe(
-    $cookingMethod: [String]
-    $description: String!
-    $ingredients: [RecipeIngredient]
-    $instructions: [String]
-    $name: String!
-    $prepTime: Int
-    $yields: Int
-  ) {
-    createRecipe(
-      cookingMethod: $cookingMethod
-      description: $description
-      ingredients: $ingredients
-      instructions: $instructions
-      name: $name
-      prepTime: $prepTime
-      yields: $yields
-    ) {
-      id
     }
   }
 `;
@@ -83,10 +59,8 @@ const DELETE_MUTATION = gql`
 `;
 
 export function RecipesPage() {
+  const history = useHistory();
   const { data, loading } = useQuery(QUERY);
-  const [createRecipe] = useMutation(CREATE_MUTATION, {
-    refetchQueries: [{ query: QUERY }],
-  });
   const [deleteRecipe] = useMutation(DELETE_MUTATION, {
     refetchQueries: [{ query: QUERY }],
   });
@@ -95,9 +69,13 @@ export function RecipesPage() {
 
   return (
     <React.Fragment>
-      <Pane display="flex" justifyContent="center">
-        <RecipeForm onSubmit={createRecipe} />
-      </Pane>
+      <Button
+        onClick={() => {
+          history.push("/user/123/recipe/new");
+        }}
+      >
+        Add Recipe
+      </Button>
       {data.recipes.map((recipe) => (
         <RecipeCard recipe={recipe} deleteRecipe={deleteRecipe} />
       ))}

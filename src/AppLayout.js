@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AddRecipePage } from "./AddRecipePage";
 import { EditRecipePage } from "./EditRecipePage";
 import { NavBar } from "./NavBar";
 import { RecipePage } from "./RecipePage";
@@ -14,6 +15,9 @@ export function AppLayout() {
       <Switch>
         <Route path="/user/:userId/recipe/:recipeId/edit">
           <EditRecipePage />
+        </Route>
+        <Route path="/user/:userId/recipe/new">
+          <AddRecipePage />
         </Route>
         <Route path="/user/:userId/recipe/:recipeId">
           <RecipePage />
