@@ -13,13 +13,13 @@ export function AppLayout() {
       <NavBar />
       <Router>
         <Switch>
-          <Route path="/user/:user_id/recipe/:recipe_id/edit">
+          <Route path="/user/:userId/recipe/:recipeId/edit">
             <EditRecipePage />
           </Route>
-          <Route path="/user/:user_id/recipe/:recipe_id">
+          <Route path="/user/:userId/recipe/:recipeId">
             <RecipePage />
           </Route>
-          <Route path="/user/:user_id">
+          <Route path="/user/:userId">
             <UserPage />
           </Route>
           <Route path="/">

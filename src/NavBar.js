@@ -1,8 +1,11 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
 import { Text } from "./Text";
 
 export function NavBar() {
+  const history = useHistory();
+
   return (
     <Pane
       alignItems="center"
@@ -12,9 +15,11 @@ export function NavBar() {
       height={majorScale(6)}
       padding={majorScale(3)}
     >
-      <Text fontSize={30} fontWeight={600}>
-        The Veggie Base
-      </Text>
+      <Pane onClick={() => history.push("/")}>
+        <Text fontSize={30} fontWeight={600}>
+          The Veggie Base
+        </Text>
+      </Pane>
       <Text>Login</Text>
     </Pane>
   );

@@ -20,7 +20,17 @@ const emptyIngredient = {
 
 const emptyInstruction = "";
 
-export function RecipeForm({ onSubmit }) {
+const getInitialValues = (recipe) => {
+  return {
+    ...recipe,
+    ingredients: { ingredients: recipe.ingredients },
+    instructions: { instructions: recipe.instructions },
+    prepTime: parseInt(recipe.prepTime),
+    yields: parseInt(recipe.yields),
+  };
+};
+
+export function RecipeForm({ onSubmit, recipe }) {
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
@@ -52,7 +62,10 @@ export function RecipeForm({ onSubmit }) {
   return (
     // use initialData prop for initial values
     <Pane display="flex" flexDirection="column" width="35%">
-      <Form onSubmit={handleSubmit}>
+      <Form
+        onSubmit={handleSubmit}
+        initialData={recipe && getInitialValues(recipe)}
+      >
         <Pane display="flex" flexDirection="column">
           <Pane marginTop={majorScale(2)}>
             <FormInput name="name" label="Name" />
@@ -134,7 +147,7 @@ export function RecipeForm({ onSubmit }) {
             })}
           </Scope>
           <Button type="submit" marginTop={majorScale(2)}>
-            Create Recipe
+            {recipe ? "Edit Recipe" : "Create Recipe"}
           </Button>
         </Pane>
       </Form>

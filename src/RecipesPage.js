@@ -9,6 +9,7 @@ const QUERY = gql`
   query RecipesPageQuery {
     recipes {
       id
+      cookingMethod
       description
       name
       ingredients {
