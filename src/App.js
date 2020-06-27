@@ -6,7 +6,7 @@ import { AppLayout } from "./AppLayout";
 function App() {
   const HTTP_URI = "http://localhost:4000";
   const client = new ApolloClient({
-    uri: HTTP_URI
+    uri: HTTP_URI,
   });
 
   return (

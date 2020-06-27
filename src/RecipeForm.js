@@ -1,33 +1,7 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
 import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { Input, Form, Scope } from "@rocketseat/unform";
 import { Text } from "./Text";
-
-const MUTATION = gql`
-  mutation CreateRecipe(
-    $cookingMethod: [String]
-    $description: String!
-    $ingredients: [RecipeIngredient]
-    $instructions: [String]
-    $name: String!
-    $prepTime: Int
-    $yields: Int
-  ) {
-    createRecipe(
-      cookingMethod: $cookingMethod
-      description: $description
-      ingredients: $ingredients
-      instructions: $instructions
-      name: $name
-      prepTime: $prepTime
-      yields: $yields
-    ) {
-      id
-    }
-  }
-`;
 
 function FormInput({ name, label }) {
   return (
@@ -46,13 +20,9 @@ const emptyIngredient = {
 
 const emptyInstruction = "";
 
-export function RecipeForm({ refetchQuery }) {
+export function RecipeForm({ onSubmit }) {
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
-
-  const [createRecipe] = useMutation(MUTATION, {
-    refetchQueries: [{ query: refetchQuery }],
-  });
 
   function handleSubmit(data, { resetForm }) {
     // fix this monstrosity
@@ -66,7 +36,7 @@ export function RecipeForm({ refetchQuery }) {
       yields: parseInt(data.yields),
     };
 
-    createRecipe({ variables }).then(() => resetForm());
+    onSubmit({ variables }).then(() => resetForm());
   }
 
   function removeItem(items, index, setItems) {

@@ -1,17 +1,7 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
 import { get } from "lodash";
 import { Button, Icon, Pane, majorScale } from "evergreen-ui";
 import { Text } from "./Text";
-
-const MUTATION = gql`
-  mutation deleteRecipe($id: String!) {
-    deleteRecipe(id: $id) {
-      id
-    }
-  }
-`;
 
 function IngredientList({ ingredients }) {
   return (
@@ -29,11 +19,7 @@ function IngredientList({ ingredients }) {
   );
 }
 
-export function RecipeCard({ recipe, refetchQuery }) {
-  const [deleteRecipe] = useMutation(MUTATION, {
-    refetchQueries: [{ query: refetchQuery }],
-  });
-
+export function RecipeCard({ deleteRecipe, recipe }) {
   return (
     <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
       <Button
@@ -42,6 +28,14 @@ export function RecipeCard({ recipe, refetchQuery }) {
         onClick={() => deleteRecipe({ variables: { id: recipe.id } })}
       >
         Delete
+      </Button>
+      <Button
+        appearance="minimal"
+        onClick={() => {
+          // go to edit page
+        }}
+      >
+        Edit
       </Button>
       <Pane marginBottom={majorScale(2)} display="flex" flexDirection="column">
         <Text fontSize={20}>{recipe.name}</Text>
