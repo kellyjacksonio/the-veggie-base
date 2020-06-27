@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AddRecipePage } from "./AddRecipePage";
 import { EditRecipePage } from "./EditRecipePage";
+import { LoginPage } from "./LoginPage";
 import { NavBar } from "./NavBar";
 import { RecipePage } from "./RecipePage";
 import { RecipesPage } from "./RecipesPage";
@@ -13,6 +14,9 @@ export function AppLayout() {
     <Router>
       <NavBar />
       <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
         <Route path="/user/:userId/recipe/:recipeId/edit">
           <EditRecipePage />
         </Route>
