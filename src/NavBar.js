@@ -15,7 +15,7 @@ export function NavBar() {
       height={majorScale(6)}
       padding={majorScale(3)}
     >
-      <Pane onClick={() => history.push("/")}>
+      <Pane onClick={() => history.push("/")} cursor="pointer">
         <Text fontSize={30} fontWeight={600}>
           The Veggie Base
         </Text>
