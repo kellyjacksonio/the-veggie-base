@@ -20,7 +20,9 @@ export function NavBar() {
           The Veggie Base
         </Text>
       </Pane>
-      <Text>Login</Text>
+      <Text cursor="pointer" onClick={() => history.push("/login")}>
+        Login
+      </Text>
     </Pane>
   );
 }
