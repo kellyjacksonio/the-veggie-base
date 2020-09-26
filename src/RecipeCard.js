@@ -12,7 +12,7 @@ function IngredientList({ ingredients }) {
         return (
           <Pane display="flex" alignItems="center">
             <Icon icon="dot" />
-            <Text>{`${ingredient.quantity} ${ingredient.measurement} ${ingredient.ingredient}`}</Text>
+            <Text>{`${ingredient}`}</Text>
           </Pane>
         );
       })}

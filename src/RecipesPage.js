@@ -12,13 +12,7 @@ const QUERY = gql`
       cookingMethod
       description
       name
-      ingredients {
-        id
-        ingredient
-        measurement
-        quantity
-        order
-      }
+      ingredients
       instructions
       prepTime
       yields
@@ -30,7 +24,7 @@ const EDIT_MUTATION = gql`
   mutation editRecipe(
     $cookingMethod: [String]
     $description: String!
-    $ingredients: [RecipeIngredient]
+    $ingredients: [String]
     $instructions: [String]
     $name: String!
     $prepTime: Int
