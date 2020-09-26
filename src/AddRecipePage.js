@@ -9,7 +9,7 @@ const CREATE_MUTATION = gql`
   mutation CreateRecipe(
     $cookingMethod: [String]
     $description: String!
-    $ingredients: [RecipeIngredient]
+    $ingredients: [String]
     $instructions: [String]
     $name: String!
     $prepTime: Int
