@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Button } from "evergreen-ui";
-import { RecipeCard } from "./RecipeCard";
+import { RecipeCard } from "components/templates";
 
 const QUERY = gql`
   query RecipesPageQuery {

@@ -1,12 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AddRecipePage } from "./AddRecipePage";
-import { EditRecipePage } from "./EditRecipePage";
-import { LoginPage } from "./LoginPage";
-import { NavBar } from "./NavBar";
-import { RecipePage } from "./RecipePage";
-import { RecipesPage } from "./RecipesPage";
-import { UserPage } from "./UserPage";
+import {
+  AddRecipePage,
+  EditRecipePage,
+  LoginPage,
+  RecipePage,
+  RecipesPage,
+  UserPage,
+} from "components/pages";
+import { NavBar } from "components/templates";
 
 export function AppLayout() {
   // edit recipe page needs to be route protected

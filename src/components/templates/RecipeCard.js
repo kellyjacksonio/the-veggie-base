@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { get } from "lodash";
 import { Button, Icon, Pane, majorScale } from "evergreen-ui";
-import { Text } from "./Text";
+import { Text } from "components/materials";
 
 function IngredientList({ ingredients }) {
   return (

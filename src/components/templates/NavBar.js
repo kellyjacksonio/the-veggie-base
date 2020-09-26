@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
-import { Text } from "./Text";
+import { Text } from "components/materials";
 
 export function NavBar() {
   const history = useHistory();

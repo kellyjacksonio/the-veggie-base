@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Pane } from "evergreen-ui";
-import { RecipeForm } from "./RecipeForm";
+import { RecipeForm } from "components/templates";
 
 const CREATE_MUTATION = gql`
   mutation CreateRecipe(

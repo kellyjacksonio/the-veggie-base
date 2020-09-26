@@ -2,7 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { useRouteMatch } from "react-router-dom";
-import { RecipeForm } from "./RecipeForm";
+import { RecipeForm } from "components/templates";
 
 const QUERY = gql`
   query EditRecipePageQuery($id: String!) {
