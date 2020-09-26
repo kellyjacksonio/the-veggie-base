@@ -103,24 +103,13 @@ export function RecipeForm({ onSubmit, recipe }) {
                       removeItem(ingredients, index, setIngredients)
                     }
                   />
-                  <FormInput
-                    name={`ingredients[${index}].quantity`}
-                    label="Quantity"
-                  />
-                  <FormInput
-                    name={`ingredients[${index}].measurement`}
-                    label="Measurement"
-                  />
-                  <FormInput
-                    name={`ingredients[${index}].ingredient`}
-                    label="Ingredient"
-                  />
+                  <FormInput name={`ingredients[${index}]`} />
                 </Pane>
               );
             })}
           </Scope>
           <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Instruction</Text>
+            <Text marginRight={majorScale(2)}>Instructions</Text>
             <Button
               onClick={() =>
                 addItem(instructions, emptyInstruction, setInstructions)
