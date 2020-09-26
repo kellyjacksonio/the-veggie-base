@@ -1,16 +1,7 @@
 import React from "react";
 import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
-import { Input, Form, Scope } from "@rocketseat/unform";
-import { Text } from "components/materials";
-
-function FormInput({ name, label }) {
-  return (
-    <Pane display="flex" flexDirection="column">
-      <Text>{label}</Text>
-      <Input name={name} />
-    </Pane>
-  );
-}
+import { Form, Scope } from "@rocketseat/unform";
+import { FormInput, Text } from "components/materials";
 
 const emptyIngredient = "";
 

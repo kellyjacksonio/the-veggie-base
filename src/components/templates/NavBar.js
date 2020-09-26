@@ -23,6 +23,9 @@ export function NavBar() {
       <Text cursor="pointer" onClick={() => history.push("/login")}>
         Login
       </Text>
+      <Text cursor="pointer" onClick={() => history.push("/user/new")}>
+        / Create Account
+      </Text>
     </Pane>
   );
 }
