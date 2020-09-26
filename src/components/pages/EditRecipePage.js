@@ -1,7 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import { useRouteMatch } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { RecipeForm } from "components/templates";
 
 const QUERY = gql`
@@ -11,13 +11,40 @@ const QUERY = gql`
       cookingMethod
       description
       name
-      ingredients {
-        id
-        ingredient
-        measurement
-        quantity
-        order
-      }
+      ingredients
+      instructions
+      prepTime
+      yields
+    }
+  }
+`;
+
+const EDIT_MUTATION = gql`
+  mutation editRecipe(
+    $id: String!
+    $cookingMethod: [String]
+    $description: String!
+    $ingredients: [String]
+    $instructions: [String]
+    $name: String!
+    $prepTime: Int
+    $yields: Int
+  ) {
+    editRecipe(
+      id: $id
+      cookingMethod: $cookingMethod
+      description: $description
+      ingredients: $ingredients
+      instructions: $instructions
+      name: $name
+      prepTime: $prepTime
+      yields: $yields
+    ) {
+      id
+      cookingMethod
+      description
+      name
+      ingredients
       instructions
       prepTime
       yields
@@ -27,11 +54,14 @@ const QUERY = gql`
 
 export function EditRecipePage() {
   const match = useRouteMatch();
+  const history = useHistory();
   const { recipeId } = match.params;
   const { data, loading } = useQuery(QUERY, { variables: { id: recipeId } });
-  // pass in mutation function to recipe form
+  const [editRecipe] = useMutation(EDIT_MUTATION, {
+    onCompleted: () => history.push("/"),
+  });
 
   if (loading) return "WE ARE LOADING";
 
-  return <RecipeForm recipe={data.recipe} />;
+  return <RecipeForm recipe={data.recipe} onSubmit={editRecipe} />;
 }

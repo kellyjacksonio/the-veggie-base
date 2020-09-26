@@ -20,30 +20,6 @@ const QUERY = gql`
   }
 `;
 
-const EDIT_MUTATION = gql`
-  mutation editRecipe(
-    $cookingMethod: [String]
-    $description: String!
-    $ingredients: [String]
-    $instructions: [String]
-    $name: String!
-    $prepTime: Int
-    $yields: Int
-  ) {
-    editRecipe(
-      cookingMethod: $cookingMethod
-      description: $description
-      ingredients: $ingredients
-      instructions: $instructions
-      name: $name
-      prepTime: $prepTime
-      yields: $yields
-    ) {
-      id
-    }
-  }
-`;
-
 const DELETE_MUTATION = gql`
   mutation deleteRecipe($id: String!) {
     deleteRecipe(id: $id) {

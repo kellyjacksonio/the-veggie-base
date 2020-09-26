@@ -25,6 +25,13 @@ const CREATE_MUTATION = gql`
       yields: $yields
     ) {
       id
+      cookingMethod
+      description
+      name
+      ingredients
+      instructions
+      prepTime
+      yields
     }
   }
 `;

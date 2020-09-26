@@ -43,7 +43,9 @@ export function RecipeCard({ deleteRecipe, recipe }) {
       <Pane marginBottom={majorScale(2)} display="flex" flexDirection="column">
         <Text fontSize={20}>{recipe.name}</Text>
         <Text>{recipe.description}</Text>
+        <Text>Prep time: {recipe.prepTime}</Text>
         <Text>Cooking method: {recipe.cookingMethod}</Text>
+        <Text>Yields: {recipe.yields}</Text>
       </Pane>
       {recipe.ingredients.length > 0 && (
         <IngredientList ingredients={recipe.ingredients} />
