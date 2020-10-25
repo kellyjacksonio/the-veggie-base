@@ -25,9 +25,7 @@ export function RecipeForm({ onSubmit, recipe }) {
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
   async function handleSubmit(data, { reset }) {
-    // fix this monstrosity
     // find number library?
-    // fix form scoping
 
     try {
       const variables = {
@@ -64,7 +62,6 @@ export function RecipeForm({ onSubmit, recipe }) {
         err.inner.forEach((error) => {
           validationError[error.path] = "Please enter a value";
         });
-        console.log("validationError", validationError);
         formRef.current.setErrors(validationError);
       }
     }
