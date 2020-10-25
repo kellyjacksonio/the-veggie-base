@@ -2,21 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { RecipeCard } from "components/templates";
-
-const QUERY = gql`
-  query RecipesPageQuery {
-    recipes {
-      id
-      cookingMethod
-      description
-      name
-      ingredients
-      instructions
-      prepTime
-      yields
-    }
-  }
-`;
+import { RECIPES_QUERY } from "helpers/queries";
 
 const DELETE_MUTATION = gql`
   mutation deleteRecipe($id: String!) {
@@ -27,9 +13,9 @@ const DELETE_MUTATION = gql`
 `;
 
 export function RecipesPage() {
-  const { data, loading } = useQuery(QUERY);
+  const { data, loading } = useQuery(RECIPES_QUERY);
   const [deleteRecipe] = useMutation(DELETE_MUTATION, {
-    refetchQueries: [{ query: QUERY }],
+    refetchQueries: [{ query: RECIPES_QUERY }],
   });
 
   if (loading) return null;
