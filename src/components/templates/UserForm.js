@@ -3,6 +3,7 @@ import { Form } from "@unform/web";
 import { Button } from "evergreen-ui";
 import * as Yup from "yup";
 import { FormInput } from "components/materials";
+import { handleSubmit } from "helpers/form";
 
 function getInitialValues(user) {
   //
@@ -10,42 +11,25 @@ function getInitialValues(user) {
 
 export function UserForm({ userMutation, user }) {
   const formRef = React.useRef(null);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required(),
+    firstName: Yup.string().required(),
+    lastName: Yup.string().required(),
+    password: Yup.string().required(),
+    username: Yup.string().required(),
+  });
 
-  async function handleSubmit(variables, reset, userMutation) {
-    try {
-      const schema = Yup.object().shape({
-        email: Yup.string().required(),
-        firstName: Yup.string().required(),
-        lastName: Yup.string().required(),
-        password: Yup.string().required(),
-        username: Yup.string().required(),
-      });
-
-      formRef.current.setErrors({});
-
-      await schema.validate(variables, {
-        abortEarly: false,
-      });
-
-      userMutation({ variables }).then(() => reset());
-    } catch (err) {
-      console.log("err", err);
-      const validationError = {};
-
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
-          validationError[error.path] = "Please enter a value";
-        });
-        formRef.current.setErrors(validationError);
-      }
-    }
-  }
-  // handle initial values
   return (
     <Form
       initialData={user && getInitialValues(user)}
-      onSubmit={(variables, { reset }) =>
-        handleSubmit(variables, reset, userMutation)
+      onSubmit={(variables) =>
+        handleSubmit(
+          variables,
+          (variables) => variables,
+          userMutation,
+          formRef,
+          validationSchema
+        )
       }
       ref={formRef}
     >

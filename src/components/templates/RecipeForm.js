@@ -4,6 +4,7 @@ import { Scope } from "@unform/core";
 import * as Yup from "yup";
 import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { FormInput, Text } from "components/materials";
+import { handleSubmit } from "helpers/form";
 
 const emptyIngredient = "";
 
@@ -22,44 +23,27 @@ export function RecipeForm({ onSubmit, recipe }) {
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
-  async function handleSubmit(data, { reset }) {
-    try {
-      const variables = {
-        ...data,
-        ingredients: data.ingredients.ingredients,
-        instructions: data.instructions.instructions,
-        ...(recipe && { id: recipe.id }),
-      };
-
-      const schema = Yup.object().shape({
-        name: Yup.string().required(),
-        description: Yup.string().required(),
-        ingredients: Yup.object().shape({
-          ingredients: Yup.array().of(Yup.string().required()),
-        }),
-        instructions: Yup.object().shape({
-          instructions: Yup.array().of(Yup.string().required()),
-        }),
-      });
-
-      formRef.current.setErrors({});
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
-      onSubmit({ variables }).then(() => reset());
-    } catch (err) {
-      const validationError = {};
-
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
-          validationError[error.path] = "Please enter a value";
-        });
-        formRef.current.setErrors(validationError);
-      }
-    }
+  function getVariables(data) {
+    return {
+      ...data,
+      ingredients: data.ingredients.ingredients,
+      instructions: data.instructions.instructions,
+      ...(recipe && { id: recipe.id }),
+    };
   }
+
+  // onSubmit({ variables }).then(() => reset());
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required(),
+    description: Yup.string().required(),
+    ingredients: Yup.object().shape({
+      ingredients: Yup.array().of(Yup.string().required()),
+    }),
+    instructions: Yup.object().shape({
+      instructions: Yup.array().of(Yup.string().required()),
+    }),
+  });
 
   function removeItem(items, index, setItems) {
     const newItems = items.filter((_item, itemIndex) => itemIndex !== index);
@@ -74,7 +58,9 @@ export function RecipeForm({ onSubmit, recipe }) {
   return (
     <Pane display="flex" flexDirection="column" width="35%">
       <Form
-        onSubmit={handleSubmit}
+        onSubmit={(data) =>
+          handleSubmit(data, getVariables, onSubmit, formRef, validationSchema)
+        }
         initialData={recipe && getInitialValues(recipe)}
         ref={formRef}
       >

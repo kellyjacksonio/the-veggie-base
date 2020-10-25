@@ -2,9 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Form } from "@unform/web";
-import { FormInput } from "components/materials";
-import { Button } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
+import { LoginForm } from "components/templates";
 
 const MUTATION = gql`
   mutation signIn($email: String!, $password: String!) {
@@ -21,10 +20,8 @@ export function LoginPage() {
   });
 
   return (
-    <Form onSubmit={(variables) => signIn({ variables })}>
-      <FormInput name="email" type="email"></FormInput>
-      <FormInput name="password" type="password"></FormInput>
-      <Button type="submit">Login</Button>
-    </Form>
+    <Pane display="flex" justifyContent="center">
+      <LoginForm signIn={signIn} />
+    </Pane>
   );
 }
