@@ -7,7 +7,7 @@ export function NavBar() {
   const history = useHistory();
 
   // temporary variables
-  const userIsAuthenticated = true;
+  const userIsAuthenticated = false;
   const username = "gorb";
 
   return (

@@ -26,11 +26,11 @@ const EDIT_MUTATION = gql`
     $id: String!
     $cookingMethod: [String]
     $description: String!
-    $ingredients: [String]
-    $instructions: [String]
+    $ingredients: [String]!
+    $instructions: [String]!
     $name: String!
-    $prepTime: Int
-    $yields: Int
+    $prepTime: String
+    $yields: String
   ) {
     editRecipe(
       id: $id

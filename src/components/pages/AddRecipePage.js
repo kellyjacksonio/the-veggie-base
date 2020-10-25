@@ -10,11 +10,11 @@ const CREATE_MUTATION = gql`
   mutation CreateRecipe(
     $cookingMethod: [String]
     $description: String!
-    $ingredients: [String]
-    $instructions: [String]
+    $ingredients: [String]!
+    $instructions: [String]!
     $name: String!
-    $prepTime: Int
-    $yields: Int
+    $prepTime: String
+    $yields: String
   ) {
     createRecipe(
       cookingMethod: $cookingMethod

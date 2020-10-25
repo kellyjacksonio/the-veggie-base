@@ -20,7 +20,7 @@ const MUTATION = gql`
       password: $password
       username: $username
     ) {
-      id
+      token
     }
   }
 `;
