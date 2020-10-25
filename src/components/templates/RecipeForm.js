@@ -8,7 +8,6 @@ const emptyIngredient = "";
 const emptyInstruction = "";
 
 const getInitialValues = (recipe) => {
-  console.log("recipe", recipe);
   return {
     ...recipe,
     ingredients: { ingredients: recipe.ingredients },
@@ -32,7 +31,7 @@ export function RecipeForm({ onSubmit, recipe }) {
       instructions: data.instructions.instructions,
       prepTime: parseInt(data.prepTime),
       yields: parseInt(data.yields),
-      ...(recipe.id && { id: recipe.id }),
+      ...(recipe && { id: recipe.id }),
     };
 
     onSubmit({ variables }).then(() => resetForm());

@@ -6,6 +6,10 @@ import { Text } from "components/materials";
 export function NavBar() {
   const history = useHistory();
 
+  // temporary variables
+  const userIsAuthenticated = true;
+  const username = "gorb";
+
   return (
     <Pane
       alignItems="center"
@@ -20,12 +24,40 @@ export function NavBar() {
           The Veggie Base
         </Text>
       </Pane>
-      <Text cursor="pointer" onClick={() => history.push("/login")}>
-        Login
-      </Text>
-      <Text cursor="pointer" onClick={() => history.push("/user/new")}>
-        / Create Account
-      </Text>
+      {userIsAuthenticated ? (
+        <Pane>
+          <Text
+            cursor="pointer"
+            onClick={() => history.push(`user/${username}/recipe/new`)}
+          >
+            Add Recipe
+          </Text>
+          <Text> | </Text>
+          <Text
+            cursor="pointer"
+            onClick={() => history.push(`user/${username}/account`)}
+          >
+            My Account
+          </Text>
+          <Text> | </Text>
+          <Text
+            cursor="pointer"
+            onClick={() => console.log("log the user out")}
+          >
+            Log Out
+          </Text>
+        </Pane>
+      ) : (
+        <Pane>
+          <Text cursor="pointer" onClick={() => history.push("/login")}>
+            Log In
+          </Text>
+          <Text> | </Text>
+          <Text cursor="pointer" onClick={() => history.push("/user/new")}>
+            Create Account
+          </Text>
+        </Pane>
+      )}
     </Pane>
   );
 }

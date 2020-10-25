@@ -1,8 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { Button } from "evergreen-ui";
 import { RecipeCard } from "components/templates";
 
 const QUERY = gql`
@@ -29,7 +27,6 @@ const DELETE_MUTATION = gql`
 `;
 
 export function RecipesPage() {
-  const history = useHistory();
   const { data, loading } = useQuery(QUERY);
   const [deleteRecipe] = useMutation(DELETE_MUTATION, {
     refetchQueries: [{ query: QUERY }],
@@ -39,13 +36,6 @@ export function RecipesPage() {
 
   return (
     <React.Fragment>
-      <Button
-        onClick={() => {
-          history.push("/user/123/recipe/new");
-        }}
-      >
-        Add Recipe
-      </Button>
       {data.recipes.map((recipe) => (
         <RecipeCard recipe={recipe} deleteRecipe={deleteRecipe} />
       ))}
