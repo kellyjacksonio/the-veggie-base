@@ -12,7 +12,6 @@ import {
 import { NavBar } from "components/templates";
 
 export function AppLayout() {
-  // edit recipe page needs to be route protected
   return (
     <Router>
       <NavBar />
@@ -23,16 +22,16 @@ export function AppLayout() {
         <Route path="/user/new">
           <AddUserPage />
         </Route>
-        <Route path="/user/:userId/recipe/:recipeId/edit">
+        <Route path="/user/:username/recipe/:recipeId/edit">
           <EditRecipePage />
         </Route>
-        <Route path="/user/:userId/recipe/new">
+        <Route path="/user/:username/recipe/new">
           <AddRecipePage />
         </Route>
-        <Route path="/user/:userId/recipe/:recipeId">
+        <Route path="/user/:username/recipe/:recipeId">
           <RecipePage />
         </Route>
-        <Route path="/user/:userId">
+        <Route path="/user/:username">
           <UserPage />
         </Route>
         <Route path="/">

@@ -2,7 +2,9 @@ import React from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { Button, Pane } from "evergreen-ui";
 import { RecipeForm } from "components/templates";
+import { Text } from "components/materials";
 
 const QUERY = gql`
   query EditRecipePageQuery($id: String!) {
@@ -52,6 +54,15 @@ const EDIT_MUTATION = gql`
   }
 `;
 
+function NoRecipeFound({ history }) {
+  return (
+    <React.Fragment>
+      <Text>No recipe found</Text>
+      <Button onClick={() => history.goBack()}>Go back</Button>
+    </React.Fragment>
+  );
+}
+
 export function EditRecipePage() {
   const match = useRouteMatch();
   const history = useHistory();
@@ -63,5 +74,13 @@ export function EditRecipePage() {
 
   if (loading) return "WE ARE LOADING";
 
-  return <RecipeForm recipe={data.recipe} onSubmit={editRecipe} />;
+  return (
+    <Pane display="flex" justifyContent="center">
+      {data ? (
+        <RecipeForm recipe={data.recipe} onSubmit={editRecipe} />
+      ) : (
+        <NoRecipeFound history={history} />
+      )}
+    </Pane>
+  );
 }
