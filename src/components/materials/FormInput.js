@@ -19,7 +19,7 @@ export function FormInput({ name, label, ...rest }) {
     <Pane display="flex" flexDirection="column">
       <Text>{label}</Text>
       <input ref={inputRef} defaultValue={defaultValue} {...rest} />
-      {error && <Text>{error}</Text>}
+      {error && <Text color="red">{error}</Text>}
     </Pane>
   );
 }

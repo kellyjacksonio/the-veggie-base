@@ -1,14 +1,15 @@
 import React from "react";
-import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { Form } from "@unform/web";
 import { Scope } from "@unform/core";
+import * as Yup from "yup";
+import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { FormInput, Text } from "components/materials";
 
 const emptyIngredient = "";
 
 const emptyInstruction = "";
 
-const getInitialValues = (recipe) => {
+function getInitialValues(recipe) {
   return {
     ...recipe,
     ingredients: { ingredients: recipe.ingredients },
@@ -16,27 +17,57 @@ const getInitialValues = (recipe) => {
     prepTime: parseInt(recipe.prepTime),
     yields: parseInt(recipe.yields),
   };
-};
+}
 
 export function RecipeForm({ onSubmit, recipe }) {
   const formRef = React.useRef(null);
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
-  function handleSubmit(data, { reset }) {
+  async function handleSubmit(data, { reset }) {
     // fix this monstrosity
     // find number library?
     // fix form scoping
-    const variables = {
-      ...data,
-      ingredients: data.ingredients.ingredients,
-      instructions: data.instructions.instructions,
-      prepTime: parseInt(data.prepTime),
-      yields: parseInt(data.yields),
-      ...(recipe && { id: recipe.id }),
-    };
 
-    onSubmit({ variables }).then(() => reset());
+    try {
+      const variables = {
+        ...data,
+        ingredients: data.ingredients.ingredients,
+        instructions: data.instructions.instructions,
+        prepTime: parseInt(data.prepTime),
+        yields: parseInt(data.yields),
+        ...(recipe && { id: recipe.id }),
+      };
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required(),
+        description: Yup.string().required(),
+        ingredients: Yup.object().shape({
+          ingredients: Yup.array().of(Yup.string().required()),
+        }),
+        instructions: Yup.object().shape({
+          instructions: Yup.array().of(Yup.string().required()),
+        }),
+      });
+
+      formRef.current.setErrors({});
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      onSubmit({ variables }).then(() => reset());
+    } catch (err) {
+      const validationError = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach((error) => {
+          validationError[error.path] = "Please enter a value";
+        });
+        console.log("validationError", validationError);
+        formRef.current.setErrors(validationError);
+      }
+    }
   }
 
   function removeItem(items, index, setItems) {
@@ -50,7 +81,6 @@ export function RecipeForm({ onSubmit, recipe }) {
   }
 
   return (
-    // use initialData prop for initial values
     <Pane display="flex" flexDirection="column" width="35%">
       <Form
         onSubmit={handleSubmit}
@@ -59,7 +89,7 @@ export function RecipeForm({ onSubmit, recipe }) {
       >
         <Pane display="flex" flexDirection="column">
           <Pane marginTop={majorScale(2)}>
-            <FormInput name="name" label="Name (required)" />
+            <FormInput name="name" label="Name" />
           </Pane>
           <Pane display="flex" marginTop={majorScale(2)}>
             <FormInput name="prepTime" label="Prep Time" />
@@ -68,11 +98,11 @@ export function RecipeForm({ onSubmit, recipe }) {
           </Pane>
           <FormInput
             name="description"
-            label="Description (required)"
+            label="Description"
             marginTop={majorScale(2)}
           />
           <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Ingredients (required)</Text>
+            <Text marginRight={majorScale(2)}>Ingredients</Text>
             <Button
               onClick={() =>
                 addItem(ingredients, emptyIngredient, setIngredients)
@@ -100,7 +130,7 @@ export function RecipeForm({ onSubmit, recipe }) {
             })}
           </Scope>
           <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Instructions (required)</Text>
+            <Text marginRight={majorScale(2)}>Instructions</Text>
             <Button
               onClick={() =>
                 addItem(instructions, emptyInstruction, setInstructions)
