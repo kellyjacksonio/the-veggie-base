@@ -14,8 +14,6 @@ function getInitialValues(recipe) {
     ...recipe,
     ingredients: { ingredients: recipe.ingredients },
     instructions: { instructions: recipe.instructions },
-    prepTime: parseInt(recipe.prepTime),
-    yields: parseInt(recipe.yields),
   };
 }
 
@@ -25,15 +23,11 @@ export function RecipeForm({ onSubmit, recipe }) {
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
   async function handleSubmit(data, { reset }) {
-    // find number library?
-
     try {
       const variables = {
         ...data,
         ingredients: data.ingredients.ingredients,
         instructions: data.instructions.instructions,
-        prepTime: parseInt(data.prepTime),
-        yields: parseInt(data.yields),
         ...(recipe && { id: recipe.id }),
       };
 

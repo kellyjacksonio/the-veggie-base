@@ -2,9 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Form } from "@unform/web";
-import { FormInput } from "components/materials";
-import { Button, Pane } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
+import { UserForm } from "components/templates";
 
 const MUTATION = gql`
   mutation createUser(
@@ -35,30 +34,7 @@ export function AddUserPage() {
   return (
     <Pane display="flex" justifyContent="center">
       <Pane width="50%">
-        <Form onSubmit={(variables) => createUser({ variables })}>
-          <FormInput
-            name="firstName"
-            type="firstName"
-            label="First Name"
-          ></FormInput>
-          <FormInput
-            name="lastName"
-            type="lastName"
-            label="Last Name"
-          ></FormInput>
-          <FormInput
-            name="username"
-            type="userName"
-            label="Username"
-          ></FormInput>
-          <FormInput name="email" type="email" label="Email"></FormInput>
-          <FormInput
-            name="password"
-            type="password"
-            label="Password"
-          ></FormInput>
-          <Button type="submit">Create Account</Button>
-        </Form>
+        <UserForm userMutation={createUser} />
       </Pane>
     </Pane>
   );
