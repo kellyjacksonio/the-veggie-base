@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Form } from "@rocketseat/unform";
+import { Form } from "@unform/web";
 import { FormInput } from "components/materials";
 import { Button, Pane } from "evergreen-ui";
 

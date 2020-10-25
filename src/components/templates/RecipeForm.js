@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
-import { Form, Scope } from "@rocketseat/unform";
+import { Form } from "@unform/web";
+import { Scope } from "@unform/core";
 import { FormInput, Text } from "components/materials";
 
 const emptyIngredient = "";
@@ -18,10 +19,11 @@ const getInitialValues = (recipe) => {
 };
 
 export function RecipeForm({ onSubmit, recipe }) {
+  const formRef = React.useRef(null);
   const [ingredients, setIngredients] = React.useState([emptyIngredient]);
   const [instructions, setInstructions] = React.useState([emptyInstruction]);
 
-  function handleSubmit(data, { resetForm }) {
+  function handleSubmit(data, { reset }) {
     // fix this monstrosity
     // find number library?
     // fix form scoping
@@ -34,7 +36,7 @@ export function RecipeForm({ onSubmit, recipe }) {
       ...(recipe && { id: recipe.id }),
     };
 
-    onSubmit({ variables }).then(() => resetForm());
+    onSubmit({ variables }).then(() => reset());
   }
 
   function removeItem(items, index, setItems) {
@@ -53,10 +55,11 @@ export function RecipeForm({ onSubmit, recipe }) {
       <Form
         onSubmit={handleSubmit}
         initialData={recipe && getInitialValues(recipe)}
+        ref={formRef}
       >
         <Pane display="flex" flexDirection="column">
           <Pane marginTop={majorScale(2)}>
-            <FormInput name="name" label="Name" />
+            <FormInput name="name" label="Name (required)" />
           </Pane>
           <Pane display="flex" marginTop={majorScale(2)}>
             <FormInput name="prepTime" label="Prep Time" />
@@ -65,11 +68,11 @@ export function RecipeForm({ onSubmit, recipe }) {
           </Pane>
           <FormInput
             name="description"
-            label="Description"
+            label="Description (required)"
             marginTop={majorScale(2)}
           />
           <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Ingredients</Text>
+            <Text marginRight={majorScale(2)}>Ingredients (required)</Text>
             <Button
               onClick={() =>
                 addItem(ingredients, emptyIngredient, setIngredients)
@@ -97,7 +100,7 @@ export function RecipeForm({ onSubmit, recipe }) {
             })}
           </Scope>
           <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Instructions</Text>
+            <Text marginRight={majorScale(2)}>Instructions (required)</Text>
             <Button
               onClick={() =>
                 addItem(instructions, emptyInstruction, setInstructions)
