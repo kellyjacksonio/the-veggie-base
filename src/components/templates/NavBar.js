@@ -18,7 +18,7 @@ export function NavBar() {
   const history = useHistory();
   const [signOut] = useMutation(SIGN_OUT);
 
-  const { token } = React.useContext(AuthContext);
+  const { token, setAuth } = React.useContext(AuthContext);
   // temporary variables
   const username = "gorb";
 
@@ -52,7 +52,15 @@ export function NavBar() {
             My Account
           </Text>
           <Text> | </Text>
-          <Text cursor="pointer" onClick={() => signOut()}>
+          <Text
+            cursor="pointer"
+            onClick={() => {
+              setAuth();
+              signOut().then(() => {
+                // reset cache
+              });
+            }}
+          >
             Log Out
           </Text>
         </Pane>

@@ -9,6 +9,7 @@ import { AuthContext } from "utils/context";
 const MUTATION = gql`
   mutation signIn($email: String!, $password: String!) {
     signIn(email: $email, password: $password) {
+      id
       token
     }
   }
@@ -17,7 +18,8 @@ const MUTATION = gql`
 export function LoginPage() {
   const { token, setAuth } = React.useContext(AuthContext);
   const [signIn] = useMutation(MUTATION, {
-    onCompleted: ({ id, token }) => {
+    onCompleted: (results) => {
+      const { id, token } = results.signIn;
       setAuth({ id, token });
     },
   });

@@ -1,7 +1,9 @@
 import React from "react";
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient } from "apollo-boost";
+import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { setContext } from "@apollo/client/link/context";
+import { setContext } from "apollo-link-context";
+import { InMemoryCache } from "apollo-cache-inmemory";
 import Cookies from "js-cookie";
 import { AppLayout } from "./AppLayout";
 import { StateProvider } from "./StateProvider";
@@ -13,6 +15,7 @@ function App() {
   });
   const authLink = setContext((_, { headers }) => {
     const token = Cookies.get("token");
+    console.log("the cookies", Cookies.get());
     return {
       headers: {
         ...headers,
@@ -20,7 +23,7 @@ function App() {
       },
     };
   });
-  console.log("authLink", authLink);
+
   const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: authLink.concat(httpLink),

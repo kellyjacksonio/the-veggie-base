@@ -30,7 +30,8 @@ const MUTATION = gql`
 export function AddUserPage() {
   const { token, setAuth } = React.useContext(AuthContext);
   const [createUser] = useMutation(MUTATION, {
-    onCompleted: ({ id, token }) => {
+    onCompleted: (results) => {
+      const { id, token } = results.createUser;
       setAuth({ id, token });
     },
   });
