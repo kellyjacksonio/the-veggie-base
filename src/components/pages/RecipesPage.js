@@ -22,8 +22,8 @@ export function RecipesPage() {
 
   return (
     <React.Fragment>
-      {data.recipes.map((recipe) => (
-        <RecipeCard recipe={recipe} deleteRecipe={deleteRecipe} />
+      {data.recipes.map((recipe, index) => (
+        <RecipeCard recipe={recipe} deleteRecipe={deleteRecipe} key={index} />
       ))}
     </React.Fragment>
   );

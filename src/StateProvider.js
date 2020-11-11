@@ -10,7 +10,7 @@ export function StateProvider({ children }) {
 
   useEffect(() => {
     if (!token) client.clearStore();
-  }, [token]);
+  }, [client, token]);
 
   const setAuth = (data) => {
     if (data) {

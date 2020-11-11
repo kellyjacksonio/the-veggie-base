@@ -8,10 +8,10 @@ function IngredientList({ ingredients }) {
   return (
     <Pane>
       <Text>Ingredients:</Text>
-      {ingredients.map((ingredient) => {
+      {ingredients.map((ingredient, index) => {
         return (
-          <Pane display="flex" alignItems="center">
-            <Icon icon="dot" />
+          <Pane display="flex" alignItems="center" key={index}>
+            <Icon icon="dot" size={12} />
             <Text>{`${ingredient}`}</Text>
           </Pane>
         );
@@ -53,7 +53,7 @@ export function RecipeCard({ deleteRecipe, recipe }) {
       {recipe.instructions && (
         <Pane display="flex" flexDirection="column">
           {get(recipe, "instructions", []).map((instruction, index) => (
-            <Text>{`${index + 1}. ${instruction}`}</Text>
+            <Text key={index}>{`${index + 1}. ${instruction}`}</Text>
           ))}
         </Pane>
       )}
