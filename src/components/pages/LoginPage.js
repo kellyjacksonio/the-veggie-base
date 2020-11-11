@@ -1,9 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Pane } from "evergreen-ui";
 import { LoginForm } from "components/templates";
+import { AuthContext } from "utils/context";
 
 const MUTATION = gql`
   mutation signIn($email: String!, $password: String!) {
@@ -14,10 +15,16 @@ const MUTATION = gql`
 `;
 
 export function LoginPage() {
-  const history = useHistory();
+  const { token, setAuth } = React.useContext(AuthContext);
   const [signIn] = useMutation(MUTATION, {
-    onCompleted: () => history.push("/"),
+    onCompleted: ({ id, token }) => {
+      setAuth({ id, token });
+    },
   });
+
+  if (token) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Pane display="flex" justifyContent="center">

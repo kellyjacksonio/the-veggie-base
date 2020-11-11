@@ -1,13 +1,25 @@
 import React from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
 import { Text } from "components/materials";
+import { AuthContext } from "utils/context";
+
+const SIGN_OUT = gql`
+  mutation SignOut {
+    signOut {
+      status
+    }
+  }
+`;
 
 export function NavBar() {
   const history = useHistory();
+  const [signOut] = useMutation(SIGN_OUT);
 
+  const { token } = React.useContext(AuthContext);
   // temporary variables
-  const userIsAuthenticated = false;
   const username = "gorb";
 
   return (
@@ -24,7 +36,7 @@ export function NavBar() {
           The Veggie Base
         </Text>
       </Pane>
-      {userIsAuthenticated ? (
+      {token ? (
         <Pane>
           <Text
             cursor="pointer"
@@ -40,10 +52,7 @@ export function NavBar() {
             My Account
           </Text>
           <Text> | </Text>
-          <Text
-            cursor="pointer"
-            onClick={() => console.log("log the user out")}
-          >
+          <Text cursor="pointer" onClick={() => signOut()}>
             Log Out
           </Text>
         </Pane>
