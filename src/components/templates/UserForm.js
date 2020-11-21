@@ -5,27 +5,23 @@ import * as Yup from "yup";
 import { FormInput } from "components/materials";
 import { handleSubmit } from "helpers/form";
 
-function getInitialValues(user) {
-  //
-}
-
-export function UserForm({ userMutation, user }) {
+export function UserForm({ hidePassword, userMutation, user }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
     email: Yup.string().required(),
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
-    password: Yup.string().required(),
     username: Yup.string().required(),
+    ...(!hidePassword ? { password: Yup.string().required() } : {}),
   });
 
   return (
     <Form
-      initialData={user && getInitialValues(user)}
+      initialData={user}
       onSubmit={(variables) =>
         handleSubmit(
           variables,
-          (variables) => variables,
+          (variables) => (user ? { ...variables, userId: user.id } : variables),
           userMutation,
           formRef,
           validationSchema
@@ -37,7 +33,9 @@ export function UserForm({ userMutation, user }) {
       <FormInput name="lastName" type="lastName" label="Last Name" />
       <FormInput name="username" type="userName" label="Username" />
       <FormInput name="email" type="email" label="Email" />
-      <FormInput name="password" type="password" label="Password" />
+      {!hidePassword && (
+        <FormInput name="password" type="password" label="Password" />
+      )}
       <Button type="submit">{user ? "Edit User" : "Create Account"}</Button>
     </Form>
   );
