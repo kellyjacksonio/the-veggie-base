@@ -1,6 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Button, Pane } from "evergreen-ui";
 import { RecipeForm } from "components/templates";

@@ -1,9 +1,11 @@
 import React from "react";
-import { ApolloClient } from "apollo-boost";
-import { createHttpLink } from "apollo-link-http";
-import { ApolloProvider } from "@apollo/react-hooks";
-import { setContext } from "apollo-link-context";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import Cookies from "js-cookie";
 import { AppLayout } from "./AppLayout";
 import { StateProvider } from "./StateProvider";

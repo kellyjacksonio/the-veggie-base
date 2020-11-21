@@ -1,6 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { RecipeCard } from "components/templates";
 import { RECIPES_QUERY } from "helpers/queries";
 

@@ -1,6 +1,5 @@
 import React from "react";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { gql, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
 import { Text } from "components/materials";

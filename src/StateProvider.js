@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useApolloClient } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/client";
 import Cookies from "js-cookie";
 import { AuthContext } from "utils/context";
 
