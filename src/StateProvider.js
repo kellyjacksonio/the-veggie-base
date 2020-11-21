@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useApolloClient } from "@apollo/client";
+import React, { useState } from "react";
 import Cookies from "js-cookie";
 import { AuthContext } from "utils/context";
 
 export function StateProvider({ children }) {
-  const client = useApolloClient();
   const [token, setToken] = useState(Cookies.get("token"));
   const [userId, setUserId] = useState(Cookies.get("userId"));
-
-  useEffect(() => {
-    if (!token) client.clearStore();
-  }, [client, token]);
 
   const setAuth = (data) => {
     if (data) {

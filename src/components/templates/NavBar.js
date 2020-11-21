@@ -1,5 +1,5 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useApolloClient, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
 import { Text } from "components/materials";
@@ -13,9 +13,19 @@ const SIGN_OUT = gql`
   }
 `;
 
+// const USER_QUERY = gql``;
+
 export function NavBar() {
+  const client = useApolloClient();
   const history = useHistory();
-  const [signOut] = useMutation(SIGN_OUT);
+  const [signOut] = useMutation(SIGN_OUT, {
+    onCompleted: () => {
+      setAuth();
+      // TODO check if the cache is actually clearing
+      client.clearStore();
+      history.push("/");
+    },
+  });
 
   const { token, setAuth } = React.useContext(AuthContext);
   // temporary variables
@@ -54,11 +64,7 @@ export function NavBar() {
           <Text
             cursor="pointer"
             onClick={() => {
-              // TODO should i signout first then setAuth ?
-              setAuth();
-              signOut().then(() => {
-                // reset cache
-              });
+              signOut();
             }}
           >
             Log Out
