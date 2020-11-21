@@ -1,7 +1,7 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Form } from "@unform/web";
-import { Button, Pane, toaster } from "evergreen-ui";
+import { Button, Pane, majorScale, toaster } from "evergreen-ui";
 import * as Yup from "yup";
 import { FormInput } from "components/materials";
 import { UserForm } from "components/templates";
@@ -79,7 +79,12 @@ function ChangePasswordForm({ changePassword, loading, userId }) {
         type="password"
         label="Confirm Password"
       />
-      <Button isLoading={loading} type="submit">
+      <Button
+        appearance="primary"
+        isLoading={loading}
+        marginTop={majorScale(2)}
+        type="submit"
+      >
         Change Password
       </Button>
     </Form>
@@ -107,12 +112,14 @@ export function UserPage() {
   return (
     <Pane display="flex" justifyContent="center">
       <Pane width="50%">
-        <UserForm
-          hidePassword
-          loading={editUserLoading}
-          user={data.user}
-          userMutation={editUser}
-        />
+        <Pane marginBottom={majorScale(4)}>
+          <UserForm
+            hidePassword
+            loading={editUserLoading}
+            user={data.user}
+            userMutation={editUser}
+          />
+        </Pane>
         <ChangePasswordForm
           changePassword={changePassword}
           loading={editPasswordLoading}

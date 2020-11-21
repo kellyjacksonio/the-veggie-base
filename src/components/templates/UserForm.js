@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "@unform/web";
-import { Button } from "evergreen-ui";
+import { Button, majorScale } from "evergreen-ui";
 import * as Yup from "yup";
 import { FormInput } from "components/materials";
 import { handleSubmit } from "helpers/form";
@@ -36,8 +36,13 @@ export function UserForm({ hidePassword, loading, userMutation, user }) {
       {!hidePassword && (
         <FormInput name="password" type="password" label="Password" />
       )}
-      <Button isLoading={loading} type="submit">
-        {user ? "Edit User" : "Create Account"}
+      <Button
+        appearance="primary"
+        isLoading={loading}
+        marginTop={majorScale(2)}
+        type="submit"
+      >
+        {user ? "Save User Changes" : "Create Account"}
       </Button>
     </Form>
   );

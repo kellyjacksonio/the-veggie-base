@@ -41,23 +41,24 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
     <React.Fragment>
       <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
         {userId && userId === recipe.user.id && (
-          <React.Fragment>
+          <Pane marginBottom={majorScale(2)}>
             <Button
-              appearance="minimal"
-              intent="danger"
-              onClick={() => setOpenDeleteWarningDialog(true)}
-            >
-              Delete
-            </Button>
-            <Button
-              appearance="minimal"
+              appearance="primary"
+              marginRight={majorScale(2)}
               onClick={() => {
                 history.push(`/user/123/recipe/${recipe.id}/edit`);
               }}
             >
               Edit
             </Button>
-          </React.Fragment>
+            <Button
+              appearance="primary"
+              intent="danger"
+              onClick={() => setOpenDeleteWarningDialog(true)}
+            >
+              Delete
+            </Button>
+          </Pane>
         )}
         <Pane
           marginBottom={majorScale(2)}

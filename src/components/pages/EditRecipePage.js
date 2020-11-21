@@ -74,7 +74,7 @@ export function EditRecipePage() {
     },
   });
 
-  if (loading) return "WE ARE LOADING";
+  if (loading) return null;
 
   return (
     <Pane display="flex" justifyContent="center">

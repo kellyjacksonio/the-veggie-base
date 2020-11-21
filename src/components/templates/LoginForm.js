@@ -27,7 +27,7 @@ export function LoginForm({ signIn }) {
     >
       <FormInput name="username" type="text" label="Username"></FormInput>
       <FormInput name="password" type="password" label="Password"></FormInput>
-      <Button marginTop={majorScale(1)} type="submit">
+      <Button appearance="primary" marginTop={majorScale(1)} type="submit">
         Login
       </Button>
     </Form>

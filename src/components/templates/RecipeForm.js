@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "@unform/web";
 import { Scope } from "@unform/core";
+import { get } from "lodash";
 import * as Yup from "yup";
 import { Button, IconButton, Pane, majorScale } from "evergreen-ui";
 import { FormInput, Text } from "components/materials";
@@ -20,8 +21,12 @@ function getInitialValues(recipe) {
 
 export function RecipeForm({ onSubmit, recipe }) {
   const formRef = React.useRef(null);
-  const [ingredients, setIngredients] = React.useState([emptyIngredient]);
-  const [instructions, setInstructions] = React.useState([emptyInstruction]);
+  const [ingredients, setIngredients] = React.useState(
+    get(recipe, "ingredients", [emptyIngredient])
+  );
+  const [instructions, setInstructions] = React.useState(
+    get(recipe, "instructions", [emptyInstruction])
+  );
 
   function getVariables(data) {
     return {
@@ -31,8 +36,6 @@ export function RecipeForm({ onSubmit, recipe }) {
       ...(recipe && { id: recipe.id }),
     };
   }
-
-  // onSubmit({ variables }).then(() => reset());
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(),
@@ -78,21 +81,17 @@ export function RecipeForm({ onSubmit, recipe }) {
             label="Description"
             marginTop={majorScale(2)}
           />
-          <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Ingredients</Text>
-            <Button
-              onClick={() =>
-                addItem(ingredients, emptyIngredient, setIngredients)
-              }
-              type="button"
-            >
-              Add Ingredient
-            </Button>
-          </Pane>
+          <Text marginTop={majorScale(2)} marginRight={majorScale(2)}>
+            Ingredients
+          </Text>
           <Scope path="ingredients">
             {ingredients.map((_ingredient, index) => {
               return (
-                <Pane display="flex" alignItems="center">
+                <Pane
+                  display="flex"
+                  alignItems="center"
+                  key={`ingredient${index}`}
+                >
                   <IconButton
                     disabled={ingredients.length === 1}
                     icon="cross"
@@ -106,21 +105,27 @@ export function RecipeForm({ onSubmit, recipe }) {
               );
             })}
           </Scope>
-          <Pane display="flex" alignItems="center" marginTop={majorScale(2)}>
-            <Text marginRight={majorScale(2)}>Instructions</Text>
+          <Pane>
             <Button
               onClick={() =>
-                addItem(instructions, emptyInstruction, setInstructions)
+                addItem(ingredients, emptyIngredient, setIngredients)
               }
               type="button"
             >
-              Add Instruction
+              Add Ingredient
             </Button>
           </Pane>
+          <Text marginTop={majorScale(2)} marginRight={majorScale(2)}>
+            Instructions
+          </Text>
           <Scope path="instructions">
             {instructions.map((_instruction, index) => {
               return (
-                <Pane display="flex" alignItems="center">
+                <Pane
+                  display="flex"
+                  alignItems="center"
+                  key={`instruction${index}`}
+                >
                   <IconButton
                     icon="cross"
                     onClick={() =>
@@ -133,8 +138,18 @@ export function RecipeForm({ onSubmit, recipe }) {
               );
             })}
           </Scope>
-          <Button type="submit" marginTop={majorScale(2)}>
-            {recipe ? "Edit Recipe" : "Create Recipe"}
+          <Pane>
+            <Button
+              onClick={() =>
+                addItem(instructions, emptyInstruction, setInstructions)
+              }
+              type="button"
+            >
+              Add Instruction
+            </Button>
+          </Pane>
+          <Button appearance="primary" type="submit" marginTop={majorScale(2)}>
+            {recipe ? "Save Recipe Changes" : "Create Recipe"}
           </Button>
         </Pane>
       </Form>
