@@ -47,7 +47,10 @@ export function RecipeCard({ deleteRecipe, recipe }) {
         </React.Fragment>
       )}
       <Pane marginBottom={majorScale(2)} display="flex" flexDirection="column">
-        <Text fontSize={20}>{recipe.name}</Text>
+        <Text fontSize={20}>
+          {recipe.name}
+          {recipe.user ? ` by ${recipe.user.username}` : ""}
+        </Text>
         <Text>{recipe.description}</Text>
         <Text>Prep time: {recipe.prepTime}</Text>
         <Text>Cooking method: {recipe.cookingMethod}</Text>

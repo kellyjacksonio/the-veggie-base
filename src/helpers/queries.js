@@ -13,6 +13,7 @@ export const RECIPES_QUERY = gql`
       yields
       user {
         id
+        username
       }
     }
   }
