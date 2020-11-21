@@ -1,5 +1,6 @@
 import React from "react";
-import { gql, useApolloClient, useMutation } from "@apollo/client";
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { get } from "lodash";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
 import { Text } from "components/materials";
@@ -13,11 +14,19 @@ const SIGN_OUT = gql`
   }
 `;
 
-// const USER_QUERY = gql``;
+const USER_QUERY = gql`
+  query UserQuery($userId: String!) {
+    user(id: $userId) {
+      id
+      username
+    }
+  }
+`;
 
 export function NavBar() {
   const client = useApolloClient();
   const history = useHistory();
+  const { userId, setAuth } = React.useContext(AuthContext);
   const [signOut] = useMutation(SIGN_OUT, {
     onCompleted: () => {
       setAuth();
@@ -26,10 +35,12 @@ export function NavBar() {
       history.push("/");
     },
   });
+  const { data } = useQuery(USER_QUERY, {
+    variables: { userId },
+    skip: !userId,
+  });
 
-  const { token, setAuth } = React.useContext(AuthContext);
-  // temporary variables
-  const username = "gorb";
+  const username = get(data, "user.username");
 
   return (
     <Pane
@@ -45,8 +56,9 @@ export function NavBar() {
           The Veggie Base
         </Text>
       </Pane>
-      {token ? (
+      {userId && username ? (
         <Pane>
+          <Text marginRight={majorScale(2)}>Welcome back, {username}!</Text>
           <Text
             cursor="pointer"
             onClick={() => history.push(`user/${username}/recipe/new`)}
