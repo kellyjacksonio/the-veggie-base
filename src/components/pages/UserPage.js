@@ -49,7 +49,7 @@ const CHANGE_PASSWORD_MUTATION = gql`
   }
 `;
 
-function ChangePasswordForm({ changePassword, loading }) {
+function ChangePasswordForm({ changePassword, loading, userId }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
     password: Yup.string().required("Required"),
@@ -64,8 +64,8 @@ function ChangePasswordForm({ changePassword, loading }) {
       onSubmit={(variables) =>
         handleSubmit(
           variables,
-          (variables) => {
-            return { variables: variables.password };
+          ({ password }) => {
+            return { password, userId };
           },
           changePassword,
           formRef,
@@ -116,6 +116,7 @@ export function UserPage() {
         <ChangePasswordForm
           changePassword={changePassword}
           loading={editPasswordLoading}
+          userId={userId}
         />
       </Pane>
     </Pane>
