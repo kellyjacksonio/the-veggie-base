@@ -3,7 +3,7 @@ import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { get } from "lodash";
 import { useHistory } from "react-router-dom";
 import { Pane, majorScale } from "evergreen-ui";
-import { Text } from "components/materials";
+import { Link, Text } from "components/materials";
 import { AuthContext } from "utils/context";
 
 const SIGN_OUT = gql`
@@ -61,21 +61,21 @@ export function NavBar() {
           <Text marginRight={majorScale(2)}>Welcome back, {username}!</Text>
           <Text
             cursor="pointer"
-            onClick={() => history.push(`user/${username}/recipe/new`)}
+            onClick={() => history.push(`/user/${username}/recipe/new`)}
           >
             Add Recipe
           </Text>
           <Text> | </Text>
           <Text
             cursor="pointer"
-            onClick={() => history.push(`user/${username}/recipes`)}
+            onClick={() => history.push(`/user/${username}/recipes`)}
           >
             My Recipes
           </Text>
           <Text> | </Text>
           <Text
             cursor="pointer"
-            onClick={() => history.push(`user/${username}/account`)}
+            onClick={() => history.push(`/user/${username}/account`)}
           >
             My Account
           </Text>
