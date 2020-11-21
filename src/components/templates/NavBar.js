@@ -73,10 +73,7 @@ export function NavBar() {
             My Recipes
           </Text>
           <Text> | </Text>
-          <Text
-            cursor="pointer"
-            onClick={() => history.push(`/user/${username}/account`)}
-          >
+          <Text cursor="pointer" onClick={() => history.push(`/user/account`)}>
             My Account
           </Text>
           <Text> | </Text>

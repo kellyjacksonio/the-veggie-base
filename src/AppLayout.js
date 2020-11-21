@@ -23,6 +23,9 @@ export function AppLayout() {
         <Route path="/user/new">
           <AddUserPage />
         </Route>
+        <Route path="/user/account">
+          <UserPage />
+        </Route>
         <Route path="/user/:username/recipe/:recipeId/edit">
           <EditRecipePage />
         </Route>
@@ -34,9 +37,6 @@ export function AppLayout() {
         </Route>
         <Route path="/user/:username/recipe/:recipeId">
           <RecipePage />
-        </Route>
-        <Route path="/user/:username">
-          <UserPage />
         </Route>
         <Route path="/">
           <RecipesPage />

@@ -110,7 +110,7 @@ export function UserPage() {
   if (loading) return null;
 
   return (
-    <Pane display="flex" justifyContent="center">
+    <Pane display="flex" justifyContent="center" marginTop={majorScale(2)}>
       <Pane width="50%">
         <Pane marginBottom={majorScale(4)}>
           <UserForm
