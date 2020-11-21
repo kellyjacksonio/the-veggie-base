@@ -11,6 +11,9 @@ export const RECIPES_QUERY = gql`
       instructions
       prepTime
       yields
+      user {
+        id
+      }
     }
   }
 `;

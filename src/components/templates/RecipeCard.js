@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { get } from "lodash";
 import { Button, Icon, Pane, majorScale } from "evergreen-ui";
 import { Text } from "components/materials";
+import { AuthContext } from "utils/context";
 
 function IngredientList({ ingredients }) {
   return (
@@ -21,25 +22,30 @@ function IngredientList({ ingredients }) {
 }
 
 export function RecipeCard({ deleteRecipe, recipe }) {
+  const { userId } = React.useContext(AuthContext);
   const history = useHistory();
 
   return (
     <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
-      <Button
-        appearance="minimal"
-        intent="danger"
-        onClick={() => deleteRecipe({ variables: { id: recipe.id } })}
-      >
-        Delete
-      </Button>
-      <Button
-        appearance="minimal"
-        onClick={() => {
-          history.push(`/user/123/recipe/${recipe.id}/edit`);
-        }}
-      >
-        Edit
-      </Button>
+      {userId && userId === get(recipe, "user.id") && (
+        <React.Fragment>
+          <Button
+            appearance="minimal"
+            intent="danger"
+            onClick={() => deleteRecipe({ variables: { id: recipe.id } })}
+          >
+            Delete
+          </Button>
+          <Button
+            appearance="minimal"
+            onClick={() => {
+              history.push(`/user/123/recipe/${recipe.id}/edit`);
+            }}
+          >
+            Edit
+          </Button>
+        </React.Fragment>
+      )}
       <Pane marginBottom={majorScale(2)} display="flex" flexDirection="column">
         <Text fontSize={20}>{recipe.name}</Text>
         <Text>{recipe.description}</Text>
