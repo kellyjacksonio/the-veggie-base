@@ -1,9 +1,11 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Form } from "@unform/web";
+import { Button, Pane, toaster } from "evergreen-ui";
+import * as Yup from "yup";
 import { FormInput } from "components/materials";
 import { UserForm } from "components/templates";
-import { Button, Pane, toaster } from "evergreen-ui";
+import { handleSubmit } from "helpers/form";
 import { AuthContext } from "utils/context";
 
 const USER_QUERY = gql`
@@ -39,17 +41,47 @@ const EDIT_USER_MUTATION = gql`
   }
 `;
 
-function ChangePasswordForm() {
+const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePasswordMutation($userId: String!, $password: String!) {
+    changePassword(password: $password, userId: $userId) {
+      status
+    }
+  }
+`;
+
+function ChangePasswordForm({ changePassword, loading }) {
   const formRef = React.useRef(null);
+  const validationSchema = Yup.object().shape({
+    password: Yup.string().required("Required"),
+    passwordConfirm: Yup.string()
+      .oneOf([Yup.ref("password")], "Password does not match")
+      .required("Required"),
+  });
+
   return (
-    <Form ref={formRef}>
+    <Form
+      ref={formRef}
+      onSubmit={(variables) =>
+        handleSubmit(
+          variables,
+          (variables) => {
+            return { variables: variables.password };
+          },
+          changePassword,
+          formRef,
+          validationSchema
+        )
+      }
+    >
       <FormInput name="password" type="password" label="Password" />
       <FormInput
         name="passwordConfirm"
         type="password"
-        label="Enter password again"
+        label="Confirm Password"
       />
-      <Button type="submit">Change Password</Button>
+      <Button isLoading={loading} type="submit">
+        Change Password
+      </Button>
     </Form>
   );
 }
@@ -63,6 +95,12 @@ export function UserPage() {
       onCompleted: () => toaster.success("Your details have been saved!"),
     }
   );
+  const [changePassword, { loading: editPasswordLoading }] = useMutation(
+    CHANGE_PASSWORD_MUTATION,
+    {
+      onCompleted: () => toaster.success("Your password has been changed!"),
+    }
+  );
 
   if (loading) return null;
 
@@ -70,12 +108,15 @@ export function UserPage() {
     <Pane display="flex" justifyContent="center">
       <Pane width="50%">
         <UserForm
-          userMutation={editUser}
-          user={data.user}
           hidePassword
           loading={editUserLoading}
+          user={data.user}
+          userMutation={editUser}
         />
-        <ChangePasswordForm />
+        <ChangePasswordForm
+          changePassword={changePassword}
+          loading={editPasswordLoading}
+        />
       </Pane>
     </Pane>
   );

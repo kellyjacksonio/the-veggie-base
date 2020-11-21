@@ -20,7 +20,7 @@ export async function handleSubmit(
 
     if (err instanceof Yup.ValidationError) {
       err.inner.forEach((error) => {
-        validationError[error.path] = "Please enter a value";
+        validationError[error.path] = error.message || "Please enter a value";
       });
       formRef.current.setErrors(validationError);
     }
