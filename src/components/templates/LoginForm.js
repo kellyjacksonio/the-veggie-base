@@ -14,15 +14,15 @@ export function LoginForm({ signIn }) {
 
   return (
     <Form
-      onSubmit={(variables) =>
+      onSubmit={(variables) => {
         handleSubmit(
           variables,
           (variables) => variables,
           signIn,
           formRef,
           validationSchema
-        )
-      }
+        );
+      }}
       ref={formRef}
     >
       <FormInput name="email" type="email" label="Email"></FormInput>

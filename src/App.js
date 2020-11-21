@@ -17,7 +17,6 @@ function App() {
   });
   const authLink = setContext((_, { headers }) => {
     const token = Cookies.get("token");
-    console.log("the cookies", Cookies.get());
     return {
       headers: {
         ...headers,
