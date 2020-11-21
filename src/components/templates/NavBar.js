@@ -54,6 +54,7 @@ export function NavBar() {
           <Text
             cursor="pointer"
             onClick={() => {
+              // TODO should i signout first then setAuth ?
               setAuth();
               signOut().then(() => {
                 // reset cache
