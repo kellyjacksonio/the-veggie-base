@@ -8,6 +8,7 @@ import {
   RecipePage,
   RecipesPage,
   UserPage,
+  UserRecipesPage,
 } from "components/pages";
 import { NavBar } from "components/templates";
 
@@ -27,6 +28,9 @@ export function AppLayout() {
         </Route>
         <Route path="/user/:username/recipe/new">
           <AddRecipePage />
+        </Route>
+        <Route path="/user/:username/recipes">
+          <UserRecipesPage />
         </Route>
         <Route path="/user/:username/recipe/:recipeId">
           <RecipePage />

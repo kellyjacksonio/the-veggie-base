@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const RECIPES_QUERY = gql`
-  query RecipesPageQuery {
-    recipes {
+  query RecipesPageQuery($username: String) {
+    recipes(username: $username) {
       id
       cookingMethod
       description

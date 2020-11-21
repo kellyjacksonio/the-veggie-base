@@ -5,3 +5,4 @@ export { LoginPage } from "./LoginPage";
 export { RecipePage } from "./RecipePage";
 export { RecipesPage } from "./RecipesPage";
 export { UserPage } from "./UserPage";
+export { UserRecipesPage } from "./UserRecipesPage";
