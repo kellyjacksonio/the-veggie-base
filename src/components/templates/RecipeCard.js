@@ -40,7 +40,7 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
   return (
     <React.Fragment>
       <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
-        {userId && userId === get(recipe, "user.id") && (
+        {userId && userId === recipe.user.id && (
           <React.Fragment>
             <Button
               appearance="minimal"
@@ -65,9 +65,14 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
           flexDirection="column"
         >
           <Pane display="flex">
-            <Text fontSize={20} marginRight={minorScale(1)}>
-              {recipe.name}
-            </Text>
+            <Pane marginRight={minorScale(1)}>
+              <Link
+                to={`/user/${recipe.user.username}/recipe/${recipe.id}`}
+                fontSize={20}
+              >
+                {recipe.name}
+              </Link>
+            </Pane>
             {recipe.user && (
               <React.Fragment>
                 <Text fontSize={20} marginRight={minorScale(1)}>

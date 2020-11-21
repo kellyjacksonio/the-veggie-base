@@ -19,3 +19,25 @@ export const RECIPES_QUERY = gql`
     }
   }
 `;
+
+export const RECIPE_QUERY = gql`
+  query RecipePageQuery($recipeId: String!) {
+    recipe(id: $recipeId) {
+      id
+      cookingMethod
+      description
+      ingredients
+      insertedAt
+      instructions
+      name
+      prepTime
+      yields
+      user {
+        id
+        username
+      }
+    }
+  }
+`;
+
+// recipe fragment
