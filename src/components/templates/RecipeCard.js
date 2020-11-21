@@ -46,9 +46,7 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
               appearance="primary"
               marginRight={majorScale(2)}
               onClick={() => {
-                history.push(
-                  `/user/${recipe.user.username}/recipe/${recipe.id}/edit`
-                );
+                history.push(`/recipe/${recipe.id}/edit`);
               }}
             >
               Edit

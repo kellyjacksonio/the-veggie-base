@@ -4,10 +4,11 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { Button, Pane, toaster } from "evergreen-ui";
 import { RecipeForm } from "components/templates";
 import { Text } from "components/materials";
+import { AuthContext } from "utils/context";
 
 const QUERY = gql`
-  query EditRecipePageQuery($id: String!) {
-    recipe(id: $id) {
+  query EditRecipePageQuery($id: String!, $userId: String!) {
+    recipe(id: $id, userId: $userId) {
       id
       cookingMethod
       description
@@ -63,10 +64,13 @@ function NoRecipeFound({ history }) {
 }
 
 export function EditRecipePage() {
+  const { userId } = React.useContext(AuthContext);
   const match = useRouteMatch();
   const history = useHistory();
   const { recipeId } = match.params;
-  const { data, loading } = useQuery(QUERY, { variables: { id: recipeId } });
+  const { data, loading } = useQuery(QUERY, {
+    variables: { id: recipeId, userId: userId },
+  });
   const [editRecipe] = useMutation(EDIT_MUTATION, {
     onCompleted: () => {
       history.push("/");

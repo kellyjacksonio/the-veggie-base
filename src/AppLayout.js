@@ -11,6 +11,7 @@ import {
   UserRecipesPage,
 } from "components/pages";
 import { NavBar } from "components/templates";
+import ProtectedRoute from "./ProtectedRoute";
 
 export function AppLayout() {
   return (
@@ -20,18 +21,18 @@ export function AppLayout() {
         <Route path="/login">
           <LoginPage />
         </Route>
+        <ProtectedRoute path="/recipe/new">
+          <AddRecipePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/recipe/:recipeId/edit">
+          <EditRecipePage />
+        </ProtectedRoute>
         <Route path="/user/new">
           <AddUserPage />
         </Route>
-        <Route path="/user/account">
+        <ProtectedRoute path="/user/account">
           <UserPage />
-        </Route>
-        <Route path="/user/:username/recipe/:recipeId/edit">
-          <EditRecipePage />
-        </Route>
-        <Route path="/user/:username/recipe/new">
-          <AddRecipePage />
-        </Route>
+        </ProtectedRoute>
         <Route path="/user/:username/recipes">
           <UserRecipesPage />
         </Route>
