@@ -8,7 +8,7 @@ import { handleSubmit } from "helpers/form";
 export function LoginForm({ signIn }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required(),
+    username: Yup.string().required(),
     password: Yup.string().required(),
   });
 
@@ -25,7 +25,7 @@ export function LoginForm({ signIn }) {
       }}
       ref={formRef}
     >
-      <FormInput name="email" type="email" label="Email"></FormInput>
+      <FormInput name="username" type="text" label="Username"></FormInput>
       <FormInput name="password" type="password" label="Password"></FormInput>
       <Button marginTop={majorScale(1)} type="submit">
         Login

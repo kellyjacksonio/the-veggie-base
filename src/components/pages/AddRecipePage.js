@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { RecipeForm } from "components/templates";
 import { RECIPES_QUERY } from "helpers/queries";
 
@@ -39,7 +39,10 @@ const CREATE_MUTATION = gql`
 export function AddRecipePage() {
   const history = useHistory();
   const [createRecipe] = useMutation(CREATE_MUTATION, {
-    onCompleted: () => history.push("/"),
+    onCompleted: () => {
+      history.push("/");
+      toaster.success("Your recipe has been created!");
+    },
     refetchQueries: [{ query: RECIPES_QUERY }],
   });
 

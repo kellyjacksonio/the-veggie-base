@@ -1,7 +1,7 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Button, Pane } from "evergreen-ui";
+import { Button, Pane, toaster } from "evergreen-ui";
 import { RecipeForm } from "components/templates";
 import { Text } from "components/materials";
 
@@ -68,7 +68,10 @@ export function EditRecipePage() {
   const { recipeId } = match.params;
   const { data, loading } = useQuery(QUERY, { variables: { id: recipeId } });
   const [editRecipe] = useMutation(EDIT_MUTATION, {
-    onCompleted: () => history.push("/"),
+    onCompleted: () => {
+      history.push("/");
+      toaster.success("Your recipe has been edited!");
+    },
   });
 
   if (loading) return "WE ARE LOADING";

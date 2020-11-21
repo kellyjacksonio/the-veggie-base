@@ -6,8 +6,8 @@ import { LoginForm } from "components/templates";
 import { AuthContext } from "utils/context";
 
 const MUTATION = gql`
-  mutation signIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
+  mutation signIn($username: String!, $password: String!) {
+    signIn(username: $username, password: $password) {
       id
       token
     }
