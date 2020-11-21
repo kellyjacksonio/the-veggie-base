@@ -28,6 +28,8 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
   const { userId } = React.useContext(AuthContext);
   const history = useHistory();
 
+  const recipeDate = new Date(recipe.insertedAt);
+
   return (
     <React.Fragment>
       <Pane border="default" padding={majorScale(4)} margin={majorScale(4)}>
@@ -59,7 +61,11 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
             {recipe.name}
             {recipe.user ? ` by ${recipe.user.username}` : ""}
           </Text>
-          <Text>{recipe.description}</Text>
+          <Text marginTop={majorScale(1)}>
+            Created on: {recipeDate.getMonth()}/{recipeDate.getDate()}/
+            {recipeDate.getFullYear()}
+          </Text>
+          <Text>Description: {recipe.description}</Text>
           <Text>Prep time: {recipe.prepTime}</Text>
           <Text>Cooking method: {recipe.cookingMethod}</Text>
           <Text>Yields: {recipe.yields}</Text>

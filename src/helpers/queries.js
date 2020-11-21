@@ -6,9 +6,10 @@ export const RECIPES_QUERY = gql`
       id
       cookingMethod
       description
-      name
       ingredients
+      insertedAt
       instructions
+      name
       prepTime
       yields
       user {
