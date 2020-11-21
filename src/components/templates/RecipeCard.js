@@ -1,8 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { get } from "lodash";
-import { Button, Dialog, Icon, Pane, majorScale } from "evergreen-ui";
-import { Text } from "components/materials";
+import {
+  Button,
+  Dialog,
+  Icon,
+  Pane,
+  majorScale,
+  minorScale,
+} from "evergreen-ui";
+import { Link, Text } from "components/materials";
 import { AuthContext } from "utils/context";
 
 function IngredientList({ ingredients }) {
@@ -57,10 +64,25 @@ export function RecipeCard({ deleteRecipe, deleteRecipeLoading, recipe }) {
           display="flex"
           flexDirection="column"
         >
-          <Text fontSize={20}>
-            {recipe.name}
-            {recipe.user ? ` by ${recipe.user.username}` : ""}
-          </Text>
+          <Pane display="flex">
+            <Text fontSize={20} marginRight={minorScale(1)}>
+              {recipe.name}
+            </Text>
+            {recipe.user && (
+              <React.Fragment>
+                <Text fontSize={20} marginRight={minorScale(1)}>
+                  {" "}
+                  by{" "}
+                </Text>
+                <Link
+                  to={`/user/${recipe.user.username}/recipes`}
+                  fontSize={20}
+                >
+                  {recipe.user.username}
+                </Link>
+              </React.Fragment>
+            )}
+          </Pane>
           <Text marginTop={majorScale(1)}>
             Created on: {recipeDate.getMonth()}/{recipeDate.getDate()}/
             {recipeDate.getFullYear()}
