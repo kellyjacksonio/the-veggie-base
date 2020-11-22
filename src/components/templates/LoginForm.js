@@ -8,8 +8,8 @@ import { handleSubmit } from "helpers/form";
 export function LoginForm({ signIn }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required(),
-    password: Yup.string().required(),
+    username: Yup.string().required("User name is required"),
+    password: Yup.string().required("Password is required"),
   });
 
   return (

@@ -8,11 +8,13 @@ import { handleSubmit } from "helpers/form";
 export function UserForm({ hidePassword, loading, userMutation, user }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required(),
-    firstName: Yup.string().required(),
-    lastName: Yup.string().required(),
-    username: Yup.string().required(),
-    ...(!hidePassword ? { password: Yup.string().required() } : {}),
+    email: Yup.string().required("Please enter an email"),
+    firstName: Yup.string().required("Please enter a first name"),
+    lastName: Yup.string().required("Please enter a last name"),
+    username: Yup.string().required("Please enter a username"),
+    ...(!hidePassword
+      ? { password: Yup.string().required("Please enter a password") }
+      : {}),
   });
 
   return (

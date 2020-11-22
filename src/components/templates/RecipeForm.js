@@ -38,13 +38,17 @@ export function RecipeForm({ onSubmit, recipe }) {
   }
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(),
-    description: Yup.string().required(),
+    name: Yup.string().required("Please enter a name"),
+    description: Yup.string().required("Please enter a description"),
     ingredients: Yup.object().shape({
-      ingredients: Yup.array().of(Yup.string().required()),
+      ingredients: Yup.array().of(
+        Yup.string().required("Please enter an ingredient")
+      ),
     }),
     instructions: Yup.object().shape({
-      instructions: Yup.array().of(Yup.string().required()),
+      instructions: Yup.array().of(
+        Yup.string().required("Please enter an instruction")
+      ),
     }),
   });
 
