@@ -13,7 +13,11 @@ export function UserForm({ hidePassword, loading, userMutation, user }) {
     lastName: Yup.string().required("Please enter a last name"),
     username: Yup.string().required("Please enter a username"),
     ...(!hidePassword
-      ? { password: Yup.string().required("Please enter a password") }
+      ? {
+          password: Yup.string()
+            .min(8, "Password must be at least 8 characters")
+            .required("Please enter a password"),
+        }
       : {}),
   });
 
@@ -36,7 +40,11 @@ export function UserForm({ hidePassword, loading, userMutation, user }) {
       <FormInput name="username" type="userName" label="Username" />
       <FormInput name="email" type="email" label="Email" />
       {!hidePassword && (
-        <FormInput name="password" type="password" label="Password" />
+        <FormInput
+          name="password"
+          type="password"
+          label="Password (Must be at least 8 characters)"
+        />
       )}
       <Button
         appearance="primary"

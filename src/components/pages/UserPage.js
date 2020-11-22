@@ -52,7 +52,9 @@ const CHANGE_PASSWORD_MUTATION = gql`
 function ChangePasswordForm({ changePassword, loading, userId }) {
   const formRef = React.useRef(null);
   const validationSchema = Yup.object().shape({
-    password: Yup.string().required("Required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Required"),
     passwordConfirm: Yup.string()
       .oneOf([Yup.ref("password")], "Password does not match")
       .required("Required"),
@@ -73,7 +75,11 @@ function ChangePasswordForm({ changePassword, loading, userId }) {
         )
       }
     >
-      <FormInput name="password" type="password" label="Password" />
+      <FormInput
+        name="password"
+        type="password"
+        label="Password (Must be at least 8 characters)"
+      />
       <FormInput
         name="passwordConfirm"
         type="password"
@@ -97,6 +103,14 @@ export function UserPage() {
   const [editUser, { loading: editUserLoading }] = useMutation(
     EDIT_USER_MUTATION,
     {
+      onError: (error) => {
+        if (error.message === "email_taken") {
+          toaster.danger("Email has already been taken", { duration: 2 });
+        }
+        if (error.message === "username_taken") {
+          toaster.danger("Username has already been taken", { duration: 2 });
+        }
+      },
       onCompleted: () => toaster.success("Your details have been saved!"),
     }
   );

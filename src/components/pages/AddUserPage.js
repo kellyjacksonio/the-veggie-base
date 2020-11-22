@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
-import { Pane } from "evergreen-ui";
+import { Pane, toaster } from "evergreen-ui";
 import { UserForm } from "components/templates";
 import { AuthContext } from "utils/context";
 
@@ -29,6 +29,14 @@ const MUTATION = gql`
 export function AddUserPage() {
   const { token, setAuth } = React.useContext(AuthContext);
   const [createUser, { loading }] = useMutation(MUTATION, {
+    onError: (error) => {
+      if (error.message === "email_taken") {
+        toaster.danger("Email has already been taken", { duration: 2 });
+      }
+      if (error.message === "username_taken") {
+        toaster.danger("Username has already been taken", { duration: 2 });
+      }
+    },
     onCompleted: (results) => {
       const { id, token } = results.createUser;
       setAuth({ id, token });
