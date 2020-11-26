@@ -11,10 +11,10 @@ import { AppLayout } from "./AppLayout";
 import { StateProvider } from "./StateProvider";
 
 function App() {
-  const HTTP_URI = "https://the-root.herokuapp.com/";
-  // process.env.NODE_ENV === "production"
-  //   ? "https://the-root.herokuapp.com/"
-  //   : "http://localhost:4000";
+  const HTTP_URI =
+    process.env.NODE_ENV === "production"
+      ? "https://the-root.herokuapp.com/"
+      : "http://localhost:4000";
 
   const httpLink = createHttpLink({
     uri: HTTP_URI,
